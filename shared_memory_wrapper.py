@@ -6,3 +6,6 @@ class SharedMemoryWrapper:
         #add properties here
         self.example_array          = Array('i', [1, 2, 3, 4, 5])
         self.running                = Value('i', 1)
+
+        self.iterations             = Value('i', 0)
+        self.motor_values           = Array('i', 6)

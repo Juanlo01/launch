@@ -1,5 +1,6 @@
 from multiprocessing                import Process, Value
-from move_up_process                import Example_Process
+from move_up_process                import MoveUp
+from move_forward_process           import MoveForward
 from kill_button_interface          import Kill_Button_Interface
 from shared_memory_wrapper          import SharedMemoryWrapper
 
@@ -17,22 +18,25 @@ def main():
 
     # create objects
     kill_button_listener = Kill_Button_Interface(running = shared_memory_object.running)
-    example_object = Example_Process(shared_memory_object) 
+    # example_object = Example_Process(shared_memory_object) 
 
     #ADD OBJECTS HERE   
+    move_forward_object = MoveUp(shared_memory_object)
+    move_up_object = MoveForward(shared_memory_object)
+
 
     #create processes
     kill_button_listener_process = Process(target=kill_button_listener.run_loop)
-    example_process = Process(target=example_object.run_loop)
+    # example_process = Process(target=example_object.run_loop)
 
     #ADD PROCESSES HERE
-    move_forward_process = Process(target=move_forward.run_loop)
+    move_forward_process = Process(target=move_forward_object.run_loop)
     move_up_process = Process(target=move_up_object.run_loop)
     
 
     # start processes
     kill_button_listener_process.start()
-    example_process.start()
+    # example_process.start()
 
     #ADD START PROCESSES HERE
     move_forward_process.start()
@@ -40,7 +44,7 @@ def main():
 
     # wait for processes to finish
     kill_button_listener_process.join()
-    example_process.join()
+    # example_process.join()
 
     #ADD JOIN PROCESSES HERE
     move_forward_process.join()
